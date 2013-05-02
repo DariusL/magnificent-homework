@@ -34,7 +34,7 @@ namespace taskai_mk_1
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.panel1.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.panel1.Location = new System.Drawing.Point(663, 166);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(314, 394);
@@ -49,15 +49,6 @@ namespace taskai_mk_1
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);
-
-            panel1.Paint += panel1_Paint;
-        }
-
-        void panel1_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
-        {
-            Graphics g = panel1.CreateGraphics();
-            Pen p = new Pen(Color.Red, 5);
-            g.DrawLine(p, new Point(5, 5), new Point(40, 40));
         }
 
         #endregion
