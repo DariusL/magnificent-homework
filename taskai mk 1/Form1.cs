@@ -17,6 +17,8 @@ namespace taskai_mk_1
         private Point prev = new Point(-1, -1);
         private Pen pen = new Pen(Brushes.Red, 1);
 
+        private PointCounter counter;
+
         public Form1()
         {
             InitializeComponent();
@@ -29,6 +31,8 @@ namespace taskai_mk_1
             this.MouseUp += panel1_MouseUp;
 
             graphics = panel1.CreateGraphics();
+
+            counter = new PointCounter(panel1.Size.Width, panel1.Size.Height);
         }
 
         void panel1_MouseMove(object sender, MouseEventArgs e)
@@ -36,6 +40,7 @@ namespace taskai_mk_1
             if (isDrawing && prev.X != -1)
             {
                 graphics.DrawLine(pen, prev, e.Location);
+                counter.setWallLine(prev, e.Location);
             }
             prev = e.Location;
         }

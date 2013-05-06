@@ -35,9 +35,9 @@ namespace taskai_mk_1
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.panel1.Location = new System.Drawing.Point(663, 166);
+            this.panel1.Location = new System.Drawing.Point(536, 138);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(314, 394);
+            this.panel1.Size = new System.Drawing.Size(500, 500);
             this.panel1.TabIndex = 0;
             // 
             // Form1
@@ -49,6 +49,7 @@ namespace taskai_mk_1
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);
+
         }
 
         #endregion
