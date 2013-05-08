@@ -20,17 +20,32 @@ namespace taskai_mk_1
         public PointCounter(int x, int y)
         {
             points = new int[x, y];
-            //setWallLine(new Point(0, 31), new Point(56, 3));
+            //setWallLine(newD Point(0, 31), new Point(56, 3));
         }
 
-        public void generatePoints(int count)
+        public void generatePoints(int count, Bitmap g)
         {
             pointsToRandom = count;
-            int pointsRandomed = 0;
-            //generate
+            Random random = new Random();
+            int sx = points.GetLength(0);
+            int sy = points.GetLength(1);
+            for (int i = 0; i < sx; i++)
+                for (int j = 0; j < sy; j++)
+                    points[i, j] &= PointValues.WALL;
+            int x, y;
+            for (int i = 0; i < count;)
+            {
+                x = random.Next(sx);
+                y = random.Next(sy);
+                if (setPoint(x, y))
+                {
+                    i++;
+                    g.SetPixel(x, y, Color.Black);
+                }
+            }
         }
 
-        public void setWallLine(Point start, Point end)
+        public void setWallLine(Point start, Point end, Bitmap map)
         {
             Point temp;
             if (start.X == end.X)
@@ -45,14 +60,14 @@ namespace taskai_mk_1
                 temp.X = start.X;
                 temp.Y = start.Y;
                 if (inBounds(temp.X, temp.Y))
-                    setWall(temp.X, temp.Y);
+                    setWall(temp.X, temp.Y, map);
                 else
                     return;
                 while (temp != end)
                 {
                     temp.Y++;
                     if (inBounds(temp.X, temp.Y))
-                        setWall(temp.X, temp.Y);
+                        setWall(temp.X, temp.Y, map);
                     else
                         return;
                 }
@@ -73,7 +88,7 @@ namespace taskai_mk_1
                 temp.X = start.X;
                 temp.Y = start.Y;
                 if (inBounds(temp.X, temp.Y))
-                    setWall(temp.X, temp.Y);
+                    setWall(temp.X, temp.Y, map);
                 else
                     return;
                 inter = (temp.X + 0.5) * k + b;
@@ -89,14 +104,14 @@ namespace taskai_mk_1
                     else
                         temp.Y--;
                     if (inBounds(temp.X, temp.Y))
-                        setWall(temp.X, temp.Y);
+                        setWall(temp.X, temp.Y, map);
                     else
                         return;
                 }
             }
         }
 
-        public bool setWall(int x, int y)
+        public bool setWall(int x, int y, Bitmap map)
         {
             if ((points[x, y] & PointValues.WALL) != 0)
                 return false;
@@ -104,6 +119,7 @@ namespace taskai_mk_1
             {
                 wallCount++;
                 points[x, y] |= PointValues.WALL;
+                map.SetPixel(x, y, Color.Red);
                 return true;
             }
         }
@@ -127,6 +143,23 @@ namespace taskai_mk_1
             {
                 System.Diagnostics.Debug.WriteLine("{0} x {1}", x, y);
                 return false;
+            }
+        }
+
+        void search()
+        {
+            Point first = new Point(1, 1);
+            Point last = new Point(points.GetLength(0) - 1, points.GetLength(1) - 1);
+            List<Area> areas = new List<Area>();
+            Queue<Point> queue = new Queue<Point>();
+            while (true)
+            {
+                Area area = new Area();
+                queue.Enqueue(first);
+                while (queue.Count != 0)
+                {
+
+                }
             }
         }
 

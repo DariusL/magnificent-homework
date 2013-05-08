@@ -16,6 +16,9 @@ namespace taskai_mk_1
         private Graphics graphics;
         private Point prev = new Point(-1, -1);
         private Pen pen = new Pen(Brushes.Red, 1);
+        private Bitmap pointMap;
+        private Bitmap wallMap;
+        private Point zero = new Point(0, 0);
 
         private PointCounter counter;
 
@@ -32,6 +35,9 @@ namespace taskai_mk_1
 
             graphics = panel1.CreateGraphics();
 
+            pointMap = new Bitmap(panel1.Size.Width, panel1.Size.Height);
+            wallMap = new Bitmap(panel1.Size.Width, panel1.Size.Height);
+
             counter = new PointCounter(panel1.Size.Width, panel1.Size.Height);
         }
 
@@ -39,8 +45,8 @@ namespace taskai_mk_1
         {
             if (isDrawing && prev.X != -1)
             {
-                graphics.DrawLine(pen, prev, e.Location);
-                counter.setWallLine(prev, e.Location);
+                counter.setWallLine(prev, e.Location, wallMap);
+                graphics.DrawImage(wallMap, zero);
             }
             prev = e.Location;
         }
@@ -53,6 +59,15 @@ namespace taskai_mk_1
         void panel1_MouseDown(object sender, MouseEventArgs e)
         {
             isDrawing = true;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            pointMap = new Bitmap(panel1.Size.Width, panel1.Size.Height);
+            counter.generatePoints(50, pointMap);
+            graphics.Clear(Color.Silver);
+            graphics.DrawImage(wallMap, zero);
+            graphics.DrawImage(pointMap, zero);
         }
     }
 }
