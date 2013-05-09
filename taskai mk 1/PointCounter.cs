@@ -14,12 +14,18 @@ namespace taskai_mk_1
         private int[,] points;
         private int wallCount = 0;
         private int pointsToRandom = 0;
-        private int walls = 0;
-        private Point[] generatedPoints;
+        private int sizeX = 0, sizeY = 0;
 
         public PointCounter(int x, int y)
         {
+            sizeX = x;
+            sizeY = y;
             points = new int[x, y];
+        }
+
+        public void clear()
+        {
+            points = new int[sizeX, sizeY];
         }
 
         public void generatePoints(int count, Bitmap g)
@@ -196,14 +202,19 @@ namespace taskai_mk_1
 
                     area.size++;
                     if ((points[point.X, point.Y] & PointValues.RANDOMED) != 0)
+                    {
                         area.pointCount++;
-
-                    bitmap.SetPixel(point.X, point.Y, area.color);
+                        bitmap.SetPixel(point.X, point.Y, Color.Black);
+                    }
+                    else
+                        bitmap.SetPixel(point.X, point.Y, area.color);
                 }
+                System.Diagnostics.Debug.Print("{0}, size {1}, count {2}", area.color.ToString(), area.size, area.pointCount);
                 color++;
                 if (color >= Area.colors.Length)
                     color = 0;
             }
+            System.Diagnostics.Debug.WriteLine("");
             panelGraphics.DrawImage(bitmap, zero);
         }
 
