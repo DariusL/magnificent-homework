@@ -26,12 +26,10 @@ namespace taskai_mk_1
         {
             pointsToRandom = count;
             Random random = new Random();
+            clear(PointValues.WALL);
+            int x, y;
             int sx = points.GetLength(0);
             int sy = points.GetLength(1);
-            for (int i = 0; i < sx; i++)
-                for (int j = 0; j < sy; j++)
-                    points[i, j] &= PointValues.WALL;
-            int x, y;
             for (int i = 0; i < count;)
             {
                 x = random.Next(sx);
@@ -42,6 +40,15 @@ namespace taskai_mk_1
                     g.SetPixel(x, y, Color.Black);
                 }
             }
+        }
+
+        private void clear(int flagsToLeave)
+        {
+            int sx = points.GetLength(0);
+            int sy = points.GetLength(1);
+            for (int i = 0; i < sx; i++)
+                for (int j = 0; j < sy; j++)
+                    points[i, j] &= flagsToLeave;
         }
 
         public void setWallLine(Point start, Point end, Bitmap map)
@@ -150,8 +157,10 @@ namespace taskai_mk_1
             Point first = new Point(1, 1);
             Point last = new Point(points.GetLength(0) - 1, points.GetLength(1) - 1);
             Point point, temp;
+            Point zero = new Point(0, 0);
             List<Area> areas = new List<Area>();
             Queue<Point> queue = new Queue<Point>();
+            clear(PointValues.WALL_OR_RANDOMED);
             int color = 0;
             while (true)
             {
@@ -190,13 +199,12 @@ namespace taskai_mk_1
                         area.pointCount++;
 
                     bitmap.SetPixel(point.X, point.Y, area.color);
-
                 }
                 color++;
                 if (color >= Area.colors.Length)
                     color = 0;
             }
-            panelGraphics.DrawImage(bitmap, new Point(0, 0));
+            panelGraphics.DrawImage(bitmap, zero);
         }
 
         private void maybeEnqueue(Point point, Queue<Point> queue)

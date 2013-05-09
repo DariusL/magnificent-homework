@@ -21,6 +21,6 @@ namespace taskai_mk_1
         }
 
         public static readonly Color[] colors = new Color[] {Color.Red, Color.Blue, Color.Green, Color.Gold, Color.Purple, Color.Aquamarine,
-                                   Color.Brown, Color.Cyan};
+                                   Color.Brown, Color.Cyan, Color.BlueViolet, Color.Crimson, Color.DarkGray, Color.LightGreen, Color.LightYellow};
     }
 }
