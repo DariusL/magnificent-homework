@@ -19,5 +19,8 @@ namespace taskai_mk_1
             size = 0;
             pointCount = 0;
         }
+
+        public static readonly Color[] colors = new Color[] {Color.Red, Color.Blue, Color.Green, Color.Gold, Color.Purple, Color.Aquamarine,
+                                   Color.Brown, Color.Cyan};
     }
 }

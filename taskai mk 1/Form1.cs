@@ -66,8 +66,13 @@ namespace taskai_mk_1
             pointMap = new Bitmap(panel1.Size.Width, panel1.Size.Height);
             counter.generatePoints(50, pointMap);
             graphics.Clear(Color.Silver);
-            graphics.DrawImage(wallMap, zero);
             graphics.DrawImage(pointMap, zero);
+            graphics.DrawImage(wallMap, zero);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            counter.search(pointMap, graphics);
         }
     }
 }
