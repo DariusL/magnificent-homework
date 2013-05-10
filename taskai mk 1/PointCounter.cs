@@ -3,9 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace taskai_mk_1
 {
@@ -13,7 +11,7 @@ namespace taskai_mk_1
     {
         private int[,] points;
         private int wallCount = 0;
-        private int pointsToRandom = 0;
+        public int randomedPoints = 0;
         private int sizeX = 0, sizeY = 0;
 
         public PointCounter(int x, int y)
@@ -30,16 +28,14 @@ namespace taskai_mk_1
 
         public void generatePoints(int count, Bitmap g)
         {
-            pointsToRandom = count;
+            randomedPoints = count;
             Random random = new Random();
             clear(PointValues.WALL);
             int x, y;
-            int sx = points.GetLength(0);
-            int sy = points.GetLength(1);
             for (int i = 0; i < count;)
             {
-                x = random.Next(sx);
-                y = random.Next(sy);
+                x = random.Next(sizeX);
+                y = random.Next(sizeY);
                 if (setPoint(x, y))
                 {
                     i++;
@@ -50,11 +46,14 @@ namespace taskai_mk_1
 
         private void clear(int flagsToLeave)
         {
-            int sx = points.GetLength(0);
-            int sy = points.GetLength(1);
-            for (int i = 0; i < sx; i++)
-                for (int j = 0; j < sy; j++)
+            for (int i = 0; i < sizeX; i++)
+                for (int j = 0; j < sizeY; j++)
                     points[i, j] &= flagsToLeave;
+        }
+
+        public int getRandomedPoints()
+        {
+            return randomedPoints;
         }
 
         public void setWallLine(Point start, Point end, Bitmap map)
@@ -158,9 +157,9 @@ namespace taskai_mk_1
             }
         }
 
-        public void search(Bitmap bitmap, Graphics panelGraphics)
+        public List<Area> search(Bitmap bitmap)
         {
-            Point first = new Point(1, 1);
+            Point first = new Point(0, 0);
             Point last = new Point(points.GetLength(0) - 1, points.GetLength(1) - 1);
             Point point, temp;
             Point zero = new Point(0, 0);
@@ -209,13 +208,13 @@ namespace taskai_mk_1
                     else
                         bitmap.SetPixel(point.X, point.Y, area.color);
                 }
-                System.Diagnostics.Debug.Print("{0}, size {1}, count {2}", area.color.ToString(), area.size, area.pointCount);
+                area.calculateSize(randomedPoints, sizeX * sizeY);
                 color++;
                 if (color >= Area.colors.Length)
                     color = 0;
+                areas.Add(area);
             }
-            System.Diagnostics.Debug.WriteLine("");
-            panelGraphics.DrawImage(bitmap, zero);
+            return areas;
         }
 
         private void maybeEnqueue(Point point, Queue<Point> queue)
